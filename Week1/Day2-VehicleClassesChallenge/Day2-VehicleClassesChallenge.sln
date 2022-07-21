@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Day2-VehicleClassesChallenge", "Day2-VehicleClassesChallenge.vcxproj", "{ACE77011-FEA1-4FA6-9C08-87D04319FB95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Debug|x64.ActiveCfg = Debug|x64
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Debug|x64.Build.0 = Debug|x64
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Debug|x86.ActiveCfg = Debug|Win32
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Debug|x86.Build.0 = Debug|Win32
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Release|x64.ActiveCfg = Release|x64
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Release|x64.Build.0 = Release|x64
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Release|x86.ActiveCfg = Release|Win32
+		{ACE77011-FEA1-4FA6-9C08-87D04319FB95}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {43AEE6F5-BFD7-4F81-8D33-C42A774FF614}
+	EndGlobalSection
+EndGlobal
