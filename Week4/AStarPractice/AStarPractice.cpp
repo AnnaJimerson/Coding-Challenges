@@ -37,7 +37,7 @@ struct Node {
     }
 };
 
-void AStar(Node arr[][COL], Node start, Node end);
+void AStar(Node arr[][COL], Node& start, Node& end);
 bool checkValidStep(int x, int y);
 
 int main()
@@ -71,11 +71,12 @@ int main()
         }
     }
 
-    AStar(nodeArray, startPoint, endPoint);
+    AStar(nodeArray, nodeArray[0][0], nodeArray[0][COL-1]);
 
+    Node* validPar = nodeArray[0][COL - 1].parent;
 }
 
-void AStar(Node arr[][COL], Node start, Node end)
+void AStar(Node arr[][COL], Node& start, Node& end)
 {
     /*for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -93,8 +94,9 @@ void AStar(Node arr[][COL], Node start, Node end)
         Node q = openList[0];
 
         for (int i = 0; i < openList.size(); i++) {
-            if (openList[i].m_fCost < q.m_fCost)
+            if (openList[i].m_fCost < q.m_fCost) {
                 q = openList[i];
+            }
 
             openList.erase(openList.begin()+i);
         }
@@ -104,44 +106,62 @@ void AStar(Node arr[][COL], Node start, Node end)
         int y = 0;
         // Top part of the square
         x = q.m_x - 1; y = q.m_y - 1;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // top left
+            arr[x][y].parent = &q;
+        }
 
         x = q.m_x - 0; y = q.m_y - 1;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // top
+            arr[x][y].parent = &q;
+        }
 
         x = q.m_x + 1; y = q.m_y - 1;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // top right
+            arr[x][y].parent = &q;
+        }
 
         // Right part of the square
         x = q.m_x + 1; y = q.m_y - 0;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // right
+            arr[x][y].parent = &q;
+        }
 
         x = q.m_x + 1; y = q.m_y + 1;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // bottom right
+            arr[x][y].parent = &q;
+        }
 
         // Bottom part of the square
         x = q.m_x + 0; y = q.m_y + 1;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // bottom
+            arr[x][y].parent = &q;
+        }
 
         x = q.m_x - 1; y = q.m_y + 1;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // bottom left
+            arr[x][y].parent = &q;
+        }
 
         // Left part of the square
         x = q.m_x - 1; y = q.m_y + 0;
-        if (checkValidStep(x, y))
+        if (checkValidStep(x, y)) {
             successors.push_back(arr[x][y]); // left
+            arr[x][y].parent = &q;
+        }
 
         for (Node& i : successors) {
             // found end goal
-            if (i.m_x == end.m_x && i.m_y == end.m_y)
+            if (i.m_x == end.m_x && i.m_y == end.m_y) {
+                std::cout << ":D" << std::endl;
                 return;
+            }
             // get gCost (dist from i to q) and hCost (dist from i to end) and fCost (g + h)
             else {
                 i.m_gCost = q.m_gCost + (abs(i.m_x - q.m_x) + abs(i.m_y - q.m_y));
