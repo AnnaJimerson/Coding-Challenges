@@ -25,7 +25,21 @@ void Grid::GenerateGrid()
 	for (int i = 0; i < m_sRow; i++) {
 		std::vector<Node*> rowVec;
 		for (int j = 0; j < m_sCol; j++) {
-			rowVec.push_back(new Node(i, j));
+			//Create new node
+			Node* newNode = new Node(i, j);
+
+			// Randomly generate some nodes as walls
+			if (i != m_startRow || j != m_startCol){
+				if (i != m_endRow || j != m_endCol){
+					if (rand() % 100 < 20){
+						newNode->SetIsWall();
+					}
+				}
+			}
+
+			// Push Nodes into vector
+			rowVec.push_back(newNode);
+
 		}
 		m_grid.push_back(rowVec);
 	}
@@ -37,12 +51,14 @@ void Grid::GenerateGrid()
 				(i-1 >= 0) ? m_grid[i-1][j] : nullptr, 
 				(i+1 < m_sRow) ? m_grid[i+1][j] : nullptr,
 				(j-1 >= 0) ? m_grid[i][j-1] : nullptr,
-				(j + 1 >= 0) ? m_grid[i][j + 1] : nullptr);
+				(j+1 < m_sCol) ? m_grid[i][j + 1] : nullptr);
 		}
 	}
 
 	m_grid[m_startRow][m_startCol]->SetIconStart();
 	m_grid[m_endRow][m_endCol]->SetIconEnd();
+
+	m_grid[m_startRow][m_startCol]->SetVisited();
 }
 
 void Grid::PrintGrid()
@@ -60,7 +76,38 @@ void Grid::PrintGrid()
 
 void Grid::Update()
 {
-	
+	if (!m_pathFound) {
+
+		// Push all open nodes to the open list
+		for (int i = 0; i < m_sRow; i++) {
+			for (int j = 0; j < m_sCol; j++) {
+				if (m_grid[i][j]->GetOpen())
+					m_openList.push_back(m_grid[i][j]);
+			}
+		}
+
+		// Visit each open node's neighbors 
+		for (auto i : m_openList) {
+			i->VisitNeighbors();
+		}
+
+		// Once we find the end
+		if (m_grid[m_endRow][m_endCol]->GetOpen()) {
+			m_pathFound = true;
+
+			Node* currentNode = m_grid[m_endRow][m_endCol]->GetParentNode();
+
+			while (currentNode) {
+				currentNode->SetIconPath();
+				currentNode = currentNode->GetParentNode();
+			}
+
+			m_grid[m_startRow][m_startCol]->SetIconStart();
+			m_grid[m_endRow][m_endCol]->SetIconEnd();
+		}
+
+		m_openList.clear();
+	}
 	PrintGrid();
 }
 

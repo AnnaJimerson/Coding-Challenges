@@ -5,8 +5,8 @@ class Grid
 {
 private:
 	std::vector<std::vector<Node*>> m_grid;
-	std::vector<Node*> openList;
-	std::vector<Node*> closedList;
+	std::vector<Node*> m_openList;
+	std::vector<Node*> m_closedList;
 
 	int m_sRow = 10;
 	int m_sCol = 10;
@@ -18,6 +18,8 @@ private:
 
 	Node* m_start;
 	Node* m_end;
+
+	bool m_pathFound = false;
 
 public:
 	// Size of the grid, max rows, max cols
