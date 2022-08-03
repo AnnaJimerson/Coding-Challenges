@@ -7,6 +7,10 @@
 
 int main()
 {
+    // Random seed
+    srand(time(0));
+
+    // Make grid
     Grid grid(10, 10);
     grid.SetStartPoint(2, 2);
     grid.SetEndPoint(8, 8);

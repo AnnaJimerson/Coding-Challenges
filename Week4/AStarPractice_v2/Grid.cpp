@@ -55,6 +55,7 @@ void Grid::GenerateGrid()
 		}
 	}
 
+	// Set start and end points
 	m_grid[m_startRow][m_startCol]->SetIconStart();
 	m_grid[m_endRow][m_endCol]->SetIconEnd();
 
@@ -97,6 +98,7 @@ void Grid::Update()
 
 			Node* currentNode = m_grid[m_endRow][m_endCol]->GetParentNode();
 
+			// Loop back through each Node's parent, and get the path
 			while (currentNode) {
 				currentNode->SetIconPath();
 				currentNode = currentNode->GetParentNode();
