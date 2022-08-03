@@ -14,6 +14,7 @@ void Node::SetIsWall()
 
 void Node::SetNeighbors(Node* up, Node* down, Node* left, Node* right)
 {
+	// Neighbors for each direction
 	if(up && !up->m_wall)
 		m_adjacent[Up] = up;
 	if(down && !down->m_wall)

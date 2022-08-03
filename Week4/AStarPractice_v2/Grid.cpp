@@ -28,7 +28,7 @@ void Grid::GenerateGrid()
 			//Create new node
 			Node* newNode = new Node(i, j);
 
-			// Randomly generate some nodes as walls
+			// Randomly generate some nodes as walls (Avoiding start or end node)
 			if (i != m_startRow || j != m_startCol){
 				if (i != m_endRow || j != m_endCol){
 					if (rand() % 100 < 20){
@@ -48,10 +48,10 @@ void Grid::GenerateGrid()
 	for (int i = 0; i < m_sRow; i++) {
 		for (int j = 0; j < m_sCol; j++) {
 			m_grid[i][j]->SetNeighbors(
-				(i-1 >= 0) ? m_grid[i-1][j] : nullptr, 
-				(i+1 < m_sRow) ? m_grid[i+1][j] : nullptr,
-				(j-1 >= 0) ? m_grid[i][j-1] : nullptr,
-				(j+1 < m_sCol) ? m_grid[i][j + 1] : nullptr);
+				(i-1 >= 0) ? m_grid[i-1][j] : nullptr,			// Up
+				(i+1 < m_sRow) ? m_grid[i+1][j] : nullptr,		// Down
+				(j-1 >= 0) ? m_grid[i][j-1] : nullptr,			// Left
+				(j+1 < m_sCol) ? m_grid[i][j + 1] : nullptr);	// Right
 		}
 	}
 
