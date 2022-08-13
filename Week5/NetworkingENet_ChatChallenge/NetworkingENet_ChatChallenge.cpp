@@ -53,7 +53,7 @@ void ServerChat(std::string name) {
 int main(int argc, char** argv)
 {
     std::string name;
-    std::cout << "Input your name: ";
+    std::cout << "Input hosts name: ";
     std::getline(std::cin, name);
 
     if (enet_initialize() != 0)
