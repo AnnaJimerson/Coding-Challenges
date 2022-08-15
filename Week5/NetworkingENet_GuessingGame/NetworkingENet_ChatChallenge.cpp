@@ -26,33 +26,35 @@ bool CreateServer()
     return server != nullptr;
 }
 
-void ServerChat(std::string name) {
-    while (1) {
-        std::string message;
-        std::getline(std::cin, message);
-
-        // Concat name to message
-        message = name + ": " + message;
-
-        // Make the message into a char*
-        const char* messageSend = message.c_str();
-
-        /* Create a reliable packet of size 7 containing "packet\0" */
-        ENetPacket* packet = enet_packet_create(messageSend,
-            strlen(messageSend) + 1,
-            ENET_PACKET_FLAG_RELIABLE);
-
-        enet_host_broadcast(server, 0, packet);
-        //enet_peer_send(event.peer, 0, packet);
-
-        /* One could just use enet_host_service() instead. */
-        //enet_host_service();
-        enet_host_flush(server);
+// For broadcasting the winning player to each client
+void ServerWinnerMessage(PlayerMessage* winner) {
+    if (!winner) {
+        std::cout << "WINNER IS NULL!" << std::endl;
+        return;
     }
+
+    // Concat name to message
+    std::string message = "~ " + winner->GetName() + " is the WINNER!";
+
+    // Make the message into a char*
+    const char* messageSend = message.c_str();
+
+    /* Create a reliable packet of size 7 containing "packet\0" */
+    ENetPacket* packet = enet_packet_create(messageSend,
+        strlen(messageSend) + 1,
+        ENET_PACKET_FLAG_RELIABLE);
+
+    enet_host_broadcast(server, 0, packet);
+    //enet_peer_send(event.peer, 0, packet);
+
+    /* One could just use enet_host_service() instead. */
+    //enet_host_service();
+    enet_host_flush(server);
 }
 
 int main(int argc, char** argv)
 {
+    // Have a random number for players to guess
     srand(time(nullptr));
     int answerNumber = rand() % 10 + 1;
 
@@ -101,6 +103,11 @@ int main(int argc, char** argv)
                 
                 // Print message from packet
                 cout << "-> " << PlayerPacket->GetGuessMessage() << std::endl;
+
+                // If their answer is correct
+                if (PlayerPacket->GetGuess() == answerNumber) {
+                    ServerWinnerMessage(PlayerPacket);
+                }
             }
 
                 //<< "was received from " << (char*)event.peer->data
