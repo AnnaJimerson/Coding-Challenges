@@ -6,5 +6,7 @@ class ServerMessage :
 private:
 
 public:
+    ServerMessage(std::string name);
+    std::string GetServerMessage() { return "~ " + GetName() + " IS THE WINNER!~"; }
 };
 

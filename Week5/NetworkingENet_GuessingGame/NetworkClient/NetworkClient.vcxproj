@@ -137,11 +137,13 @@
   <ItemGroup>
     <ClCompile Include="..\NetworkMessage.cpp" />
     <ClCompile Include="..\PlayerMessage.cpp" />
+    <ClCompile Include="..\ServerMessage.cpp" />
     <ClCompile Include="NetworkClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NetworkMessage.h" />
     <ClInclude Include="..\PlayerMessage.h" />
+    <ClInclude Include="..\ServerMessage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

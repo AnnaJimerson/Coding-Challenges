@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "../PlayerMessage.h"
+#include "../ServerMessage.h"
 using namespace std;
 
 ENetAddress address;
@@ -98,7 +99,7 @@ int main(int argc, char** argv)
     std::thread ChatThread(ClientChat, name);
 
     // Ping to server for any messages incoming
-    while (1)
+    while (!gameEnded)
     {
         ENetEvent event;
         /* Wait up to 1000 milliseconds for an event. */
@@ -107,11 +108,18 @@ int main(int argc, char** argv)
             switch (event.type)
             {
             case ENET_EVENT_TYPE_RECEIVE:
-                cout << "-> " << (char*)event.packet->data << '\t' <<
-                    "(Length "
-                    << event.packet->dataLength << ")" << std::endl;
+                // Cast packet to player message
+                ServerMessage* ServerPacket = (ServerMessage*)event.packet->data;
+
+                // Print message from packet
+                cout << "-> " << ServerPacket->GetServerMessage() << std::endl;
+
+                // Set game end
+                gameEnded = true;
+
                 /* Clean up the packet now that we're done using it. */
                 enet_packet_destroy(event.packet);
+                break;
             }
         }
     }

@@ -3,6 +3,7 @@
 #include <thread>
 #include <string>
 #include "PlayerMessage.h"
+#include "ServerMessage.h"
 
 using namespace std;
 
@@ -33,15 +34,11 @@ void ServerWinnerMessage(PlayerMessage* winner) {
         return;
     }
 
-    // Concat name to message
-    std::string message = "~ " + winner->GetName() + " is the WINNER!";
-
-    // Make the message into a char*
-    const char* messageSend = message.c_str();
+    ServerMessage winningMessage(winner->GetName());
 
     /* Create a reliable packet of size 7 containing "packet\0" */
-    ENetPacket* packet = enet_packet_create(messageSend,
-        strlen(messageSend) + 1,
+    ENetPacket* packet = enet_packet_create(&winningMessage,
+        sizeof(ServerMessage),
         ENET_PACKET_FLAG_RELIABLE);
 
     enet_host_broadcast(server, 0, packet);
@@ -55,8 +52,11 @@ void ServerWinnerMessage(PlayerMessage* winner) {
 int main(int argc, char** argv)
 {
     // Have a random number for players to guess
+    int randomMax = 20;
+    std::cout << "Input the max our winning number can be: ";
+    std::cin >> randomMax;
     srand(time(nullptr));
-    int answerNumber = rand() % 10 + 1;
+    int answerNumber = rand() % randomMax + 1;
 
     if (enet_initialize() != 0)
     {
@@ -75,6 +75,9 @@ int main(int argc, char** argv)
     else {
         std::cout << "Server creation successful!" << std::endl;
     }
+
+    //Print answer
+    std::cout << "Winning number is: " << answerNumber << std::endl;
 
     // Ping to recieve messages
     while (1)
@@ -107,6 +110,9 @@ int main(int argc, char** argv)
                 // If their answer is correct
                 if (PlayerPacket->GetGuess() == answerNumber) {
                     ServerWinnerMessage(PlayerPacket);
+
+                    // Print winning message
+                    cout << "~~ " << PlayerPacket->GetName() << " IS THE WINNER!! ~~" << std::endl;
                 }
             }
 

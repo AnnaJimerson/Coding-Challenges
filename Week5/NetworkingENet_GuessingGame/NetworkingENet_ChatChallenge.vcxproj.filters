@@ -24,12 +24,18 @@
     <ClCompile Include="PlayerMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ServerMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NetworkMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
